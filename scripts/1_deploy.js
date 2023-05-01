@@ -1,3 +1,5 @@
+const { ethers } = require('hardhat')
+
 async function main() {
     // fetch contract to deploy 
     const Token = await ethers.getContractFactory("Token")
