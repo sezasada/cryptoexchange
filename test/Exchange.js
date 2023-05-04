@@ -16,7 +16,7 @@ describe("Exchange", () => {
     const Exchange = await ethers.getContractFactory("Exchange");
     const Token = await ethers.getContractFactory("Token");
 
-    token1 = await Token.deploy("Sebastien Token", "SEBZ", "1000000");
+    token1 = await Token.deploy("Sebastien's Token", "SEBZ", "1000000");
 
     accounts = await ethers.getSigners();
     deployer = accounts[0];
