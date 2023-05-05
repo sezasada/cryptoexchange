@@ -9,17 +9,12 @@ contract Exchange {
     address public feeAccount;
     uint256 public feePercent;
     mapping(address => mapping(address => uint256)) public tokens;
-
-    // Orders Mapping 
+    // Orders Mapping
     mapping(uint256 => _Order) public orders;
     uint256 public orderCount;
+    mapping(uint256 => bool) public orderCancelled;
 
-    event Deposit(
-        address token, 
-        address user, 
-        uint256 amount, 
-        uint256 balance
-    );
+    event Deposit(address token, address user, uint256 amount, uint256 balance);
     event Withdraw(
         address token,
         address user,
@@ -28,11 +23,21 @@ contract Exchange {
     );
 
     event Order(
-           uint256 id,
+        uint256 id,
         address user,
         address tokenGet,
         uint256 amountGet,
-        address tokenGive, 
+        address tokenGive,
+        uint256 amountGive,
+        uint256 timestamp
+    );
+
+    event Cancel(
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
         uint256 amountGive,
         uint256 timestamp
     );
@@ -41,11 +46,11 @@ contract Exchange {
         // Attributes of an order
         uint256 id; // id for each order
         address user; // User who made order
-        address tokenGet; //address of the token they receive 
-        uint256 amountGet; // Amount they receive 
-        address tokenGive; // Address of the token they give 
+        address tokenGet; //address of the token they receive
+        uint256 amountGet; // Amount they receive
+        address tokenGive; // Address of the token they give
         uint256 amountGive; // Amount they receive
-        uint256 timestamp; // When order was created 
+        uint256 timestamp; // When order was created
     }
 
     constructor(address _feeAccount, uint256 _feePercent) {
@@ -95,33 +100,57 @@ contract Exchange {
         address _tokenGive,
         uint256 _amountGive
     ) public {
-
         // Prevent orders if tokens aren't on exchange
         require(balanceOf(_tokenGive, msg.sender) >= _amountGive);
 
         // Token Give (the token they want to spend) - which token and how much
         // token Get (the token they weant to recieve) - which token and how much
 
-        orderCount = orderCount + 1; 
+        orderCount = orderCount + 1;
 
         orders[orderCount] = _Order(
             orderCount,
             msg.sender,
-            _tokenGet, 
-            _amountGet, 
+            _tokenGet,
+            _amountGet,
             _tokenGive,
-            _amountGive, 
+            _amountGive,
             block.timestamp
         );
 
-        // Emit Event 
+        // Emit Event
         emit Order(
-            orderCount, 
+            orderCount,
             msg.sender,
-            _tokenGet, 
-            _amountGet, 
-            _tokenGive, 
+            _tokenGet,
+            _amountGet,
+            _tokenGive,
             _amountGive,
+            block.timestamp
+        );
+    }
+
+    function cancelOrder(uint256 _id) public {
+        // Fetch the order
+        _Order storage _order = orders[_id];
+
+        // Ensure the caller of the function is the owner of the order
+        require(address(_order.user) == msg.sender);
+
+        // Order must exist 
+        require(_order.id == _id);
+        
+        // Cancel the order
+        orderCancelled[_id] = true;
+
+        // emit event
+        emit Cancel(
+            _order.id,
+            msg.sender,
+            _order.tokenGet,
+            _order.amountGet,
+            _order.tokenGive,
+            _order.amountGive,
             block.timestamp
         );
     }
