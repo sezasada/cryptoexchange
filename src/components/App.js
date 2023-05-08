@@ -1,51 +1,38 @@
 import { useEffect } from "react";
-import TOKEN_ABI from '../abis/Token.json'
-import "../App.css";
-import { ethers } from "ethers";
-import config from '../config.json'
+import config from "../config.json";
+import { useDispatch } from "react-redux";
+import { loadProvider, loadNetwork, loadAccount, loadToken } from "../store/interactions";
 function App() {
+  const dispatch = useDispatch();
 
-const loadBlockchainData = async () => {
-  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-  console.log(accounts[0])
+  const loadBlockchainData = async () => {
+    await loadAccount(dispatch)
 
-  // Connect Ethers to blockchain 
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const { chainId } = await provider.getNetwork()
-  console.log(chainId);
+    // Connect Ethers to blockchain
+    const provider = loadProvider(dispatch)
+    const chainId = await loadNetwork(provider, dispatch)
 
-  // Token Smart Contract 
-  const token = new ethers.Contract( config[chainId].SEBZ.address , TOKEN_ABI , provider)
-  console.log(token.address)
-  const symbol = await token.symbol()
-  console.log(symbol)
+    // Token Smart Contract
+    await loadToken(provider, config[chainId].SEBZ.address, dispatch)
+  };
 
-
-}
-
-useEffect(() => {
-  loadBlockchainData()
-
-
-})
+  useEffect(() => {
+    loadBlockchainData();
+  });  
 
   return (
     <div>
-
       {/* Navbar */}
 
-      <main className='exchange grid'>
-        <section className='exchange__section--left grid'>
-
+      <main className="exchange grid">
+        <section className="exchange__section--left grid">
           {/* Markets */}
 
           {/* Balance */}
 
           {/* Order */}
-
         </section>
-        <section className='exchange__section--right grid'>
-
+        <section className="exchange__section--right grid">
           {/* PriceChart */}
 
           {/* Transactions */}
@@ -53,12 +40,10 @@ useEffect(() => {
           {/* Trades */}
 
           {/* OrderBook */}
-
         </section>
       </main>
 
       {/* Alert */}
-
     </div>
   );
 }
