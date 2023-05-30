@@ -22,7 +22,7 @@ const Markets = () => {
 
       {chainId && config[chainId] ? (
         <select name="markets" id="markets" onChange={marketHandler}>
-          <option value={`${config[chainId].SEBZ.address},${config[chainId].mETH.address}`}>DApp / mETH</option>
+          <option value={`${config[chainId].SEBZ.address},${config[chainId].mETH.address}`}>SEBZ / mETH</option>
           <option value={`${config[chainId].SEBZ.address},${config[chainId].SEBZ.address}`}>SEBZ / mDAI</option>
         </select>
       ) : (
