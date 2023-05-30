@@ -37,9 +37,9 @@ function App() {
     })
 
     // Load token smart contracts
-    const DApp = config[chainId].DApp
+    const SEBZ = config[chainId].SEBZ
     const mETH = config[chainId].mETH
-    await loadTokens(provider, [DApp.address, mETH.address], dispatch)
+    await loadTokens(provider, [SEBZ.address, mETH.address], dispatch)
 
     // Load exchange smart contract
     const exchangeConfig = config[chainId].exchange
