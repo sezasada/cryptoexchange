@@ -14,9 +14,9 @@ async function main() {
   );
 
   // deploy contract
-  const sebz = await Token.deploy("Sebastien's Token", "SEBZ", '1000000');
-  await sebz.deployed();
-  console.log(`SEBZ Deployed to: ${sebz.address}`);
+  const SEBZ = await Token.deploy("Sebastien's Token", "SEBZ", '1000000');
+  await SEBZ.deployed();
+  console.log(`SEBZ Deployed to: ${SEBZ.address}`);
 
   const mETH = await Token.deploy('mETH', 'mETH', '1000000');
   await mETH.deployed();
