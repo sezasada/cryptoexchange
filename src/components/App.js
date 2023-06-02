@@ -12,7 +12,7 @@ import {
   subscribeToEvents,
 } from "../store/interactions";
 
-import Navbar from "./Navbar";
+import Navbar from "./NavBar";
 import Markets from "./Markets";
 import Balance from "./Balance";
 import Order from "./Order";
