@@ -8,7 +8,7 @@ import { loadAccount } from '../store/interactions'
 
 import config from '../config.json';
 
-const NavBar = () => {
+const Navbar = () => {
   const provider = useSelector(state => state.provider.connection)
   const chainId = useSelector(state => state.provider.chainId)
   const account = useSelector(state => state.provider.account)
@@ -78,4 +78,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar;
+export default Navbar;

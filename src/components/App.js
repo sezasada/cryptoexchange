@@ -13,7 +13,7 @@ import {
 } from "../store/interactions";
 
 import Markets from "./Markets";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import Balance from "./Balance";
 import Order from "./Order";
 import PriceChart from "./PriceChart";
@@ -68,7 +68,7 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <Navbar />
 
       <main className="exchange grid">
         <section className="exchange__section--left grid">
