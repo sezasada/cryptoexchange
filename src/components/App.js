@@ -12,7 +12,7 @@ import {
   subscribeToEvents,
 } from "../store/interactions";
 
-import Navbar from "./NavBar";
+import NavBar from "./NavBar";
 import Markets from "./Markets";
 import Balance from "./Balance";
 import Order from "./Order";
@@ -68,7 +68,7 @@ function App() {
 
   return (
     <div>
-      <Navbar />
+      <NavBar />
 
       <main className="exchange grid">
         <section className="exchange__section--left grid">
