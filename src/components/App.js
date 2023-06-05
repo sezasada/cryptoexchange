@@ -12,8 +12,8 @@ import {
   subscribeToEvents,
 } from "../store/interactions";
 
-import NavBar from "./NavBar";
 import Markets from "./Markets";
+import NavBar from "./NavBar";
 import Balance from "./Balance";
 import Order from "./Order";
 import PriceChart from "./PriceChart";
